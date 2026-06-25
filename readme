@@ -2,6 +2,17 @@ Simple Ass Runner - SAR
 =======================
 A tiny task runner
 
+Usage
+-----
+$ sar
+• build
+• run
+• test
+
+$ sar build
+
+After running "sar build" it executes the command under build section in your sarc
+
 Features
 --------
 running commands by name
