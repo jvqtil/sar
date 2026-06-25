@@ -18,6 +18,3 @@ sar uses Makefile format:
 
 name:
 	command
-
-
-NOTE: there always should be a tab before command, not spaces
