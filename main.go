@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var Version string
+
 type Task struct {
 	Name     string
 	Commands []string
@@ -105,17 +107,22 @@ func main() {
 		list(cfg, "• ")
 		return
 	}
-	// for future autocomplete
-	if os.Args[1] == "--raw" {
+	switch os.Args[1] {
+	case "--raw":
+		// for future autocomplete
 		list(cfg, "")
 		return
-	}
-	task, ok := cfg.Tasks[os.Args[1]]
-	if !ok {
-		fmt.Printf("task \"%s\" not found\n", os.Args[1])
-	}
-	if err := run(task); err != nil {
-		fmt.Println(err)
-		return
+	case "-v", "--version":
+		fmt.Printf("sar %s\n", Version)
+	default:
+		task, ok := cfg.Tasks[os.Args[1]]
+		if !ok {
+			fmt.Printf("task \"%s\" not found\n", os.Args[1])
+			return
+		}
+		if err := run(task); err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 }
