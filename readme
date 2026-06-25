@@ -1,0 +1,23 @@
+Simple Ass Runner - SAR
+=======================
+A tiny task runner
+
+Features
+--------
+running commands by name
+thats it. nothing more
+
+Installing
+----------
+go install github.com/jvqtil/sar@latest
+or download a binary from releases
+
+Syntax
+------
+sar uses Makefile format:
+
+name:
+	command
+
+
+NOTE: there always should be a tab before command, not spaces
