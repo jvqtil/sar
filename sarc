@@ -1,0 +1,13 @@
+dev:
+	go build -trimpath -ldflags="-s -w -X main.Version=dev" -o sar .
+clean:
+	rm -rf dist
+	echo "cleaned"
+dist:
+	@clean
+	echo "building dist"
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w -X main.Version=v1.1.0" -o dist/sar-linux-amd64 .
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w -X main.Version=v1.1.0" -o dist/sar-linux-arm64 .
+	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags="-s -w -X main.Version=v1.1.0" -o dist/sar-macos-arm64 .
+	echo "done"
+	ls dist

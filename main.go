@@ -64,8 +64,19 @@ func parse(data []byte) (*Config, error) {
 	return cfg, nil
 }
 
-func run(task Task) error {
+func run(cfg *Config, task Task) error {
 	for _, cmd := range task.Commands {
+		if strings.HasPrefix(cmd, "@") {
+			name := strings.TrimPrefix(cmd, "@")
+			nested, ok := cfg.Tasks[name]
+			if !ok {
+				return fmt.Errorf("task %q not found", name)
+			}
+			if err := run(cfg, nested); err != nil {
+				return err
+			}
+			continue
+		}
 		c := exec.Command("sh", "-c", cmd)
 		c.Stdout = os.Stdout
 		c.Stdin = os.Stdin
@@ -120,7 +131,7 @@ func main() {
 			fmt.Printf("task \"%s\" not found\n", os.Args[1])
 			return
 		}
-		if err := run(task); err != nil {
+		if err := run(cfg, task); err != nil {
 			fmt.Println(err)
 			return
 		}
