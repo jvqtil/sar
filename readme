@@ -11,7 +11,7 @@ $ sar
 
 $ sar build
 
-After running "sar build" it executes the command under build section in your sarc
+After running "sar build" it executes the command under build section in your "sarc" file
 
 Features
 --------
@@ -25,7 +25,11 @@ or download a binary from releases
 
 Syntax
 ------
-sar uses Makefile format:
+sar uses Makefile format and supports nested calls, here's an example "sarc":
 
-name:
-	command
+clean:
+	rm ./binary
+
+build:
+    @clean
+	go build -o binary
